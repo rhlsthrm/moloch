@@ -5,26 +5,21 @@ body,
   font-family: 'Open Sans', sans-serif;
 }
 
-.header {
-  text-align: center;
-}
-
 h1, h2, h3 {
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
 }
 
 code {
-  padding: .25rem;
-  margin: 0 .25rem;
+  display: block;
+  margin: 20px 0 15px 0;
+  padding: 10px;
   background: #eee;
 }
 
 .container {
   box-sizing: border-box;
-  width: calc(100% - 60px);
-  max-width: 600px;
+  width: 100%;
   padding: 45px 20px;
-  margin: 0 auto;
 }
 
 .pure-button-primary {
@@ -37,15 +32,6 @@ code {
 
 .pure-form input[type="text"]:focus {
   border-color: #0c1a2b;
-}
-
-ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-ul li:not(:last-child) {
-  margin-bottom: 15px;
 }
 
 /* NAVBAR */
@@ -79,32 +65,4 @@ ul li:not(:last-child) {
 .navbar .uport-logo {
   height: 16px;
   margin-right: 10px;
-}
-
-/* LOADING SCREEN */
-
-.loading-screen {
-  opacity: 1;
-  visibility: visible;
-  transition: all .25s ease-in-out;
-}
-
-.loading-screen.loaded {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* FORMS */
-
-.pure-form {
-  display: inline-block;
-}
-
-/* ALERTS */
-
-.alert {
-  padding: .5rem;
-  color: darkgreen;
-  background: darkseagreen;
-  border: 1px solid darkgreen;
 }

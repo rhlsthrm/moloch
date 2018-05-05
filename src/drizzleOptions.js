@@ -1,4 +1,4 @@
-import SimpleStorage from './../build/contracts/SimpleStorage.json'
+import Moloch from './../build/contracts/Moloch.json'
 
 const drizzleOptions = {
   web3: {
@@ -9,10 +9,13 @@ const drizzleOptions = {
     }
   },
   contracts: [
-    SimpleStorage
+    Moloch
   ],
   events: {
-    SimpleStorage: [ 'StorageSet' ]
+    Moloch: [ 
+      'MemberAccepted',
+      'MemberExit'
+    ]
   }
 }
 

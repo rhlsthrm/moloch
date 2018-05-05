@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 
-// Styles
-import './css/oswald.css'
-import './css/open-sans.css'
-import './css/pure-min.css'
-import './App.css'
+// layouts
 import HomeContainer from './layouts/home/HomeContainer';
 
 class App extends Component {
