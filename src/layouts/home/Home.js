@@ -22,13 +22,33 @@ class Home extends Component {
     }
   }
 
-  componentWillReceiveProps = (nextProps) => {
+  componentDidMount = () => {
+
+  }
+
+
+  componentDidUpdate = (nextProps) => {
+    const { messages } = this.state
     if (nextProps === this.props || !nextProps) {
       return
     }
 
-    if (this.validateWeb3(nextProps.web3)) {
-      // correct metamask
+    if (this.validateWeb3(nextProps.web3) && messages.length === 0) {
+      // correct metamask, check drizzle 
+      if (!nextProps.drizzleStatus.initialized) {
+        const msg = {
+          icon: 'bullhorn',
+          sentiment: 'warning',
+          title: 'Whoops, looks like an error occurred',
+          content:
+            'We seem to be having some drizzle issues, are you on the same network you deployed to and using the same artifacts?'
+        }
+        if (messages.indexOf(msg) === -1) {
+          messages.push(msg)
+        }
+        this.setState({ messages })
+        return
+      }
     } else {
       return
     }
@@ -36,9 +56,11 @@ class Home extends Component {
 
   validateWeb3 = (web3) => {
     const { messages } = this.state
-    if (!web3) {
+    if (!web3 || web3.status === '' || !web3.networkId) {
       return false
-    } else if (web3.status === 'failed') {
+    }
+    
+    if (web3.status === 'failed') {
       console.log('No web3 detected')
       const msg = {
         icon: 'bullhorn',
@@ -61,7 +83,7 @@ class Home extends Component {
           title: "Looks like you're not on Rinkeby or Truffle!",
           content: 'Switch to the Rinkeby network (or use your local machine) so everything works.'
         }
-        if (messages.indexOf(msg) === -1 && messages.length === 0) {
+        if (messages.indexOf(msg) === -1) {
           messages.push(msg)
         }
         this.setState({ messages })
