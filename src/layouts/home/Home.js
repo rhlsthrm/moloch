@@ -34,7 +34,7 @@ class Home extends Component {
     }
 
     if (this.validateWeb3(nextProps.web3) && messages.length === 0) {
-      // correct metamask, check drizzle 
+      // correct web3, check drizzle 
       if (!nextProps.drizzleStatus.initialized) {
         const msg = {
           icon: 'bullhorn',
@@ -50,6 +50,7 @@ class Home extends Component {
         return
       }
     } else {
+      // drizzle and web3 correct, proceed
       return
     }
   }
