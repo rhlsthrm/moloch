@@ -5,7 +5,7 @@ const drizzleOptions = {
     block: false,
   },
   contracts: [
-    Moloch
+    Moloch,
   ],
   events: {
     Moloch: [ 
