@@ -5,7 +5,7 @@ const mapStateToProps = state => {
   return {
     drizzleStatus: state.drizzleStatus,
     web3: state.web3,
-    ChannelManager: state.contracts.ChannelManager,
+    Moloch: state.contracts.Moloch,
     accounts: state.accounts,
   }
 }

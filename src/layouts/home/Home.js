@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Container } from 'semantic-ui-react'
+import { Loader } from 'semantic-ui-react'
 
 // layouts
 import MessageList from '../messages/MessageList';
+import MainMenuContainer from '../mainMenu/MainMenuContainer';
 
 class Home extends Component {
   static contextTypes = {
@@ -30,12 +31,20 @@ class Home extends Component {
   componentDidUpdate = (nextProps) => {
     const { messages } = this.state
     if (nextProps === this.props || !nextProps) {
+      // no new props
       return
     }
 
-    if (this.validateWeb3(nextProps.web3) && messages.length === 0) {
+    if (
+      this.validateWeb3(nextProps.web3) && 
+      messages.length === 0
+    ) {
       // correct web3, check drizzle 
-      if (!nextProps.drizzleStatus.initialized) {
+      if (
+        !nextProps.drizzleStatus.initialized ||
+        !nextProps.Moloch.initialized
+      ) {
+        // drizzle or contract not init
         const msg = {
           icon: 'bullhorn',
           sentiment: 'warning',
@@ -49,9 +58,9 @@ class Home extends Component {
         this.setState({ messages })
         return
       }
-    } else {
-      // drizzle and web3 correct, proceed
-      return
+
+      // drizzle, contract, and web3 properly initd
+
     }
   }
 
@@ -97,12 +106,14 @@ class Home extends Component {
     }
   }
 
-  render() {
+  render () {
     return (
       <main className="container">
-        <Container>
-          <MessageList messages={this.state.messages} />
-        </Container>
+        <MessageList messages={this.state.messages} />
+
+        <Loader active={!this.props.Moloch.initialized} />
+
+        <MainMenuContainer />
       </main>
     )
   }
