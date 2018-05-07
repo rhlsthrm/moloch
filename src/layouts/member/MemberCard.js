@@ -1,27 +1,10 @@
 import React, { Component } from 'react'
 import { 
-    Card, Icon, Header
+    Card, Header
 } from 'semantic-ui-react'
 
-const iconOptions = [
-    'chess king',
-    'chess queen',
-    'chess pawn',
-    'chess knight',
-    'bug',
-    'user secret',
-    'hand spock outline',
-    'hand rock outline',
-    'frown outline',
-    'meh outline',
-    'smile outline',
-    'thumbs down outline',
-    'thumps up outline',
-    'gem outline',
-]
-
 // for testing only
-const member = {
+let member = {
     votingShares: '723',
     address: '0x00',
     firstName: 'First',
@@ -35,25 +18,18 @@ const member = {
 class MemberCard extends Component {
     state = {
         member: member, // async db call
-        icon: null
     }
 
     componentDidMount = () => {
-        this.setRandomIcon()
-    }
-
-    setRandomIcon = () => {
-        let icon = iconOptions[ Math.floor(Math.random() * iconOptions.length) ]
-        this.setState({ icon })
-        return
+        // TO DO
+        // fetch member from database
     }
 
     render = () => {
-        const { member, icon } = this.state
+        const { member } = this.state
         return (
             <Card className='four stackable cards'>
                 <Card.Content>
-                    <Icon className={icon} size='huge'/>
                     <Header as='h3'>
                         {member.firstName} {member.lastName}, AKA {member.nickname}
                     </Header>
@@ -68,7 +44,6 @@ class MemberCard extends Component {
                     </div>               
                 </Card.Content>
             </Card>
-
         )
     }
 

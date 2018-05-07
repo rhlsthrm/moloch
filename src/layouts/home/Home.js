@@ -5,7 +5,7 @@ import { Loader } from 'semantic-ui-react'
 // layouts
 import MessageList from '../messages/MessageList';
 import MainMenuContainer from '../mainMenu/MainMenuContainer';
-import MemberContainer from '../member/MemberContainer';
+import MemberCardContainer from '../member/MemberCardContainer';
 
 class Home extends Component {
   static contextTypes = {
@@ -116,7 +116,7 @@ class Home extends Component {
 
         <MainMenuContainer />
 
-        <MemberContainer />
+        <MemberCardContainer />
       </main>
     )
   }
