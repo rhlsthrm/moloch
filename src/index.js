@@ -22,6 +22,8 @@ ReactDOM.render((
     <DrizzleProvider options={drizzleOptions} store={store}>
         <Router history={history}>
           <Route path="/" component={App} />
+          {/* <Route path="/members" component={MembersContainer} />
+          <Route path="/proposals" component={ProposalsContainer} /> */}
         </Router>
     </DrizzleProvider>
   ),
