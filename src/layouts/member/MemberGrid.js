@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { 
-    Grid, Icon
+    Grid, Icon, Table, Container, TableHeaderCell, TableHeader, TableRow, TableBody
 } from 'semantic-ui-react'
-import MemberCard from './MemberCard';
+import MemberRow from './MemberRow';
 import MemberProposalModal from './MemberProposalModal'
 // test members
 import members from './membersTest'
@@ -22,46 +22,41 @@ class MemberGrid extends Component {
 
     render = () => {
         return (
-                <div className='ui fluid link cards'>
-                    <Grid relaxed style={{'margin': '1em'}}>
-                        <Grid.Row centered>
-                            <MemberProposalModal />
-                        </Grid.Row>
-                        <Grid.Row>
-                            <h4 className='ui horizontal divider header'>
-                                <Icon className='user plus' />
-                                Proposed Guild Members
-                            </h4>
-                        </Grid.Row>
-                        <Grid.Row>
-                            {this.state.members.map( (member, index) => {
-                                return (
-                                    <div key={index}>
-                                        <Grid.Column style={{'margin': '1em'}}>
-                                            <MemberCard member={member} />
-                                        </Grid.Column>
-                                    </div>
-                                )
-                            })}
-                        </Grid.Row>
-                        <Grid.Row>
-                            <h4 className='ui horizontal divider header'>
-                                <Icon className='users' />
-                                Current Guild Members
-                            </h4>
-                        </Grid.Row>
-                        <Grid.Row>
-                            {this.state.members.map( (member, index) => {
-                                return (
-                                    <div key={index}>
-                                        <Grid.Column style={{'margin': '1em'}}>
-                                            <MemberCard member={member} />
-                                        </Grid.Column>
-                                    </div>
-                                )
-                            })}
-                        </Grid.Row>
-                    </Grid>
+                <div>
+                    <Container>
+                        <Grid relaxed style={{'margin': '1em'}}>
+                            <Grid.Row centered>
+                                <MemberProposalModal />
+                            </Grid.Row>
+                            <Grid.Row>
+                                <h4 className='ui horizontal divider header'>
+                                    <Icon className='users' />
+                                    Guild Members
+                                </h4>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Table celled selectable>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHeaderCell content='Name' />
+                                            <TableHeaderCell content='Voting Shares' />
+                                            <TableHeaderCell content='Member Since' />
+                                            <TableHeaderCell content='Sponsor' />
+                                        </TableRow>
+                                    </TableHeader>
+
+                                    <TableBody>
+                                            {this.state.members.map( (member, index) => {
+                                                return (
+                                                    <MemberRow member={member} key={index} />
+                                                )
+                                            })}
+                                    </TableBody>
+                                </Table>
+                            </Grid.Row>
+
+                        </Grid>
+                    </Container>
                 </div>
         )
     }
