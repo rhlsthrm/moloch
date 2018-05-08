@@ -6,6 +6,7 @@ import { Loader } from 'semantic-ui-react'
 import MessageList from '../messages/MessageList';
 import MainMenuContainer from '../mainMenu/MainMenuContainer';
 import MemberCardContainer from '../member/MemberCardContainer';
+import RaidsContainer from '../raids/RaidsContainer';
 
 class Home extends Component {
   static contextTypes = {
@@ -114,9 +115,6 @@ class Home extends Component {
 
         <Loader active={!this.props.Moloch.initialized} />
 
-        <MainMenuContainer />
-
-        <MemberCardContainer />
       </main>
     )
   }
