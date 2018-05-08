@@ -27,48 +27,26 @@ class Home extends Component {
   }
 
 
-  componentWillMount = (nextProps) => {
+  componentWillReceiveProps = (nextProps) => {
     const { messages } = this.state
     if (nextProps === this.props || !nextProps) {
       // no new props
       return
     }
 
-    console.log('correct web3',this.validateWeb3(nextProps.web3))
-    console.log('messages.length === 0:',messages.length === 0)
-    console.log('nextProps:', nextProps)
-
     if (
       this.validateWeb3(nextProps.web3) && 
       messages.length === 0
     ) {
-      // correct web3, check drizzle
-      if (this.validateDrizzle(nextProps)) {
+      // TO DO: create validateDrizzle
+      if (nextProps.drizzleStatus.initialized && nextProps.Moloch.initialized) {
         // drizzle and contract inited
         return
+        // console.log('trying contract call')
+        // const dataKey = this.contracts.Moloch.methods.getMember.cacheCall(nextProps.accounts[0])
+        // console.log(dataKey)
+        // return nextProps.Moloch.methods.getMember[dataKey].value
       } 
-    }
-  }
-
-  validateDrizzle = (nextProps) => {
-    const {messages} = this.state
-    if (
-      !nextProps.drizzleStatus.initialized ||
-      !nextProps.Moloch.initialized
-    ) {
-      // drizzle or contract not init
-      const msg = {
-        icon: 'bullhorn',
-        sentiment: 'warning',
-        title: 'Whoops, looks like an error occurred',
-        content:
-          'We seem to be having some drizzle issues, are you on the same network you deployed to and using the same artifacts?'
-      }
-      if (messages.indexOf(msg) === -1) {
-        messages.push(msg)
-      }
-      this.setState({ messages })
-      return
     }
   }
 

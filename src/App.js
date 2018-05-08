@@ -9,7 +9,7 @@ import {
 import HomeContainer from './layouts/home/HomeContainer'
 import MainMenuContainer from './layouts/mainMenu/MainMenuContainer'
 import RaidsContainer from './layouts/raids/RaidsContainer'
-import MemberGrid from './layouts/member/MemberGrid';
+import MemberGridContainer from './layouts/member/MemberGridContainer';
 
 class App extends Component {
 
@@ -21,7 +21,7 @@ class App extends Component {
 
           <Switch>
               <Route path='/' exact component={HomeContainer} />
-              <Route path='/guild' component={MemberGrid} />
+              <Route path='/guild' component={MemberGridContainer} />
               <Route path='/raids' component={RaidsContainer} />
           </Switch>
           

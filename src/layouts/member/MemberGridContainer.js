@@ -1,5 +1,5 @@
 import { drizzleConnect } from 'drizzle-react'
-import MemberCard from './MemberCard'
+import MemberGrid from './MemberGrid'
 
 const mapStateToProps = state => {
   return {
@@ -10,6 +10,6 @@ const mapStateToProps = state => {
   }
 }
 
-const MemberCardContainer = drizzleConnect(MemberCard, mapStateToProps)
+const MemberGridContainer = drizzleConnect(MemberGrid, mapStateToProps)
 
-export default MemberCardContainer
+export default MemberGridContainer

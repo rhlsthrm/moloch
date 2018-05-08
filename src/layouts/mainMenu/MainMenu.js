@@ -13,7 +13,7 @@ import {
 class MainMenu extends Component {
     state = {
         // TO DO: set to url param
-        activeMenuItem: this.props.history[this.props.history.length-1]
+        activeMenuItem: 'home'
     }
 
     handleMenuItemClick = (e, { name }) => {
@@ -26,7 +26,6 @@ class MainMenu extends Component {
     }
 
     render = () => {
-        console.log()
         const { activeMenuItem } = this.state
         return (
             <Grid style={{'margin': '1em'}}>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { 
     Grid, Icon
 } from 'semantic-ui-react'
-import MemberCardContainer from './MemberCardContainer';
+import MemberCard from './MemberCard';
 import MemberProposalModal from './MemberProposalModal'
 // test members
 import members from './membersTest'
@@ -12,8 +12,12 @@ class MemberGrid extends Component {
         members: members
     }
 
-    componentDidMount = () => {
+    componentWillReceiveProps = (nextProps) => {
         // TO DO
+        // get members
+        if (!nextProps || nextProps === this.props) {
+            return
+        }
     }
 
     render = () => {
@@ -34,7 +38,7 @@ class MemberGrid extends Component {
                                 return (
                                     <div key={index}>
                                         <Grid.Column style={{'margin': '1em'}}>
-                                            <MemberCardContainer member={member} />
+                                            <MemberCard member={member} />
                                         </Grid.Column>
                                     </div>
                                 )
@@ -51,7 +55,7 @@ class MemberGrid extends Component {
                                 return (
                                     <div key={index}>
                                         <Grid.Column style={{'margin': '1em'}}>
-                                            <MemberCardContainer member={member} />
+                                            <MemberCard member={member} />
                                         </Grid.Column>
                                     </div>
                                 )

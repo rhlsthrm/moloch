@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { 
     Grid,
-    Icon
+    Icon,
 } from 'semantic-ui-react'
 
 class Raids extends Component {

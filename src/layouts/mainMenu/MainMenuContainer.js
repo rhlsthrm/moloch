@@ -7,7 +7,8 @@ const mapStateToProps = state => {
     web3: state.web3,
     Moloch: state.contracts.Moloch,
     accounts: state.accounts,
-    history: state.history
+    history: state.history,
+    match: state.match
   }
 }
 
