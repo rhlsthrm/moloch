@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Loader } from 'semantic-ui-react'
+import { 
+  Loader,
+  Icon,
+  Grid
+ } from 'semantic-ui-react'
 
 // layouts
 import MessageList from '../messages/MessageList';
@@ -23,39 +27,48 @@ class Home extends Component {
   }
 
 
-  componentDidUpdate = (nextProps) => {
+  componentWillMount = (nextProps) => {
     const { messages } = this.state
     if (nextProps === this.props || !nextProps) {
       // no new props
       return
     }
 
+    console.log('correct web3',this.validateWeb3(nextProps.web3))
+    console.log('messages.length === 0:',messages.length === 0)
+    console.log('nextProps:', nextProps)
+
     if (
       this.validateWeb3(nextProps.web3) && 
       messages.length === 0
     ) {
-      // correct web3, check drizzle 
-      if (
-        !nextProps.drizzleStatus.initialized ||
-        !nextProps.Moloch.initialized
-      ) {
-        // drizzle or contract not init
-        const msg = {
-          icon: 'bullhorn',
-          sentiment: 'warning',
-          title: 'Whoops, looks like an error occurred',
-          content:
-            'We seem to be having some drizzle issues, are you on the same network you deployed to and using the same artifacts?'
-        }
-        if (messages.indexOf(msg) === -1) {
-          messages.push(msg)
-        }
-        this.setState({ messages })
+      // correct web3, check drizzle
+      if (this.validateDrizzle(nextProps)) {
+        // drizzle and contract inited
         return
+      } 
+    }
+  }
+
+  validateDrizzle = (nextProps) => {
+    const {messages} = this.state
+    if (
+      !nextProps.drizzleStatus.initialized ||
+      !nextProps.Moloch.initialized
+    ) {
+      // drizzle or contract not init
+      const msg = {
+        icon: 'bullhorn',
+        sentiment: 'warning',
+        title: 'Whoops, looks like an error occurred',
+        content:
+          'We seem to be having some drizzle issues, are you on the same network you deployed to and using the same artifacts?'
       }
-
-      // drizzle, contract, and web3 properly initd
-
+      if (messages.indexOf(msg) === -1) {
+        messages.push(msg)
+      }
+      this.setState({ messages })
+      return
     }
   }
 
@@ -91,9 +104,11 @@ class Home extends Component {
         if (messages.indexOf(msg) === -1) {
           messages.push(msg)
         }
-        this.setState({ messages })
         return false
       }
+      // no metamask errors, clear messages
+      this.setState({ messages: [] })
+      return true
     } else {
       // no metamask errors, clear messages
       this.setState({ messages: [] })
@@ -108,6 +123,26 @@ class Home extends Component {
 
         <Loader active={!this.props.Moloch.initialized} />
 
+        <Grid>
+        <Grid.Row>
+            <h4 className='ui horizontal divider header'>
+                <Icon className='gavel' />
+                Current Proposal
+            </h4>
+          </Grid.Row>
+          <Grid.Row>
+            <h4 className='ui horizontal divider header'>
+                <Icon className='user plus' />
+                Guild Member Proposals
+            </h4>
+          </Grid.Row>
+          <Grid.Row>
+            <h4 className='ui horizontal divider header'>
+                <Icon className='crosshairs' />
+                Raid Proposals
+            </h4>
+          </Grid.Row>
+        </Grid>
       </main>
     )
   }

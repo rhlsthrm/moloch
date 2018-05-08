@@ -2,22 +2,13 @@ import React, { Component } from 'react'
 import { 
     Card, Header
 } from 'semantic-ui-react'
-
-// for testing only
-let member = {
-    votingShares: '723',
-    address: '0x00',
-    firstName: 'First',
-    lastName: 'Last',
-    nickname: 'Nickname',
-    description: 'Short bio about the member and stuff',
-    dateJoined: '12/12/12',
-    sponsoredBy: null,
-}
+import {
+    withRouter,
+  } from 'react-router-dom';
 
 class MemberCard extends Component {
     state = {
-        member: member, // async db call
+        // member: member, // async db call
     }
 
     componentDidMount = () => {
@@ -26,10 +17,10 @@ class MemberCard extends Component {
     }
 
     render = () => {
-        const { member } = this.state
+        const { member } = this.props
         return (
-            <Card className='ui fluid card'>
-                <Card.Content>
+            <Card className='ui fluid card' style={{'margin': '1em'}}>
+                <Card.Content onClick={()=>this.props.history.push(`/guild/${member.address}`)}>
                     <Header as='h3'>
                         {member.firstName} {member.lastName}, AKA {member.nickname}
                     </Header>
@@ -49,4 +40,4 @@ class MemberCard extends Component {
 
 }
 
-export default MemberCard
+export default withRouter(MemberCard)
