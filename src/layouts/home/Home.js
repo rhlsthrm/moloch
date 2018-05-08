@@ -4,9 +4,6 @@ import { Loader } from 'semantic-ui-react'
 
 // layouts
 import MessageList from '../messages/MessageList';
-import MainMenuContainer from '../mainMenu/MainMenuContainer';
-import MemberCardContainer from '../member/MemberCardContainer';
-import RaidsContainer from '../raids/RaidsContainer';
 
 class Home extends Component {
   static contextTypes = {
@@ -23,10 +20,6 @@ class Home extends Component {
     this.state = {
       messages: []
     }
-  }
-
-  componentDidMount = () => {
-
   }
 
 

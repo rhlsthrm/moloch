@@ -28,7 +28,7 @@ class MemberCard extends Component {
     render = () => {
         const { member } = this.state
         return (
-            <Card className='four stackable cards'>
+            <Card className='ui fluid card'>
                 <Card.Content>
                     <Header as='h3'>
                         {member.firstName} {member.lastName}, AKA {member.nickname}
