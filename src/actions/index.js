@@ -64,3 +64,38 @@ export const getCurrentProposalDetailsKey = (Moloch) => {
         }
     }
 }
+
+
+
+/** GET MEMBER ACTIONS */
+function requestMemberKey () {
+    return {
+        type: 'REQUEST_MEMBER_KEY'
+    }
+}
+
+function receiveMemberKey (dataKey) {
+    return {
+        type: 'RECEIVED_MEMBER_KEY',
+        payload: dataKey
+    }
+}
+
+function requestMemberKeyFailure (e) {
+    return {
+        type: 'REQUEST_MEMBER_KEY_FAILURE',
+        payload: e.toString()
+    }
+}
+
+export const getMemberKey = (address, Moloch) => {
+    return dispatch => {
+        dispatch(requestMemberKey)
+        try {
+            const dataKey = Moloch.methods.getMemberKey.cacheCall(address)
+            dispatch(receiveMemberKey(dataKey))
+        } catch (e) {
+            dispatch(requestMemberKeyFailure(e))
+        }
+    }
+}
