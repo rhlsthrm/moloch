@@ -25,11 +25,14 @@ class CurrentProposal extends Component {
         }
     }
 
-
-    componentDidUpdate = () => {
-        // get key values from cache
+    componentDidMount = () => {
         this.getCurrentProposalInformation()
     }
+
+    // componentDidUpdate = () => {
+    //     // get key values from cache
+    //     this.getCurrentProposalInformation()
+    // }
 
     getCurrentProposalInformation = () => {
         const { 
