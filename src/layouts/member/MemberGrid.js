@@ -3,13 +3,11 @@ import {
     Grid, Icon, Table, Container, TableHeaderCell, TableHeader, TableRow, TableBody
 } from 'semantic-ui-react'
 import MemberRow from './MemberRow';
-import MemberProposalModal from './MemberProposalModal'
-// test members
-import members from './membersTest'
+import MemberProposalModalContainer from './MemberProposalModalContainer'
 
 class MemberGrid extends Component {
     state = {
-        members: members
+        members: []
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -26,7 +24,7 @@ class MemberGrid extends Component {
                     <Container>
                         <Grid relaxed style={{'margin': '1em'}}>
                             <Grid.Row centered>
-                                <MemberProposalModal />
+                                <MemberProposalModalContainer />
                             </Grid.Row>
                             <Grid.Row>
                                 <h4 className='ui horizontal divider header'>

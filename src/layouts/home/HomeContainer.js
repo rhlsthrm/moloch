@@ -7,6 +7,10 @@ const mapStateToProps = state => {
     web3: state.web3,
     Moloch: state.contracts.Moloch,
     accounts: state.accounts,
+    transactionStack: state.transactionStack,
+    transactions: state.transactions,
+    dispatch: state.proposals.dispatch,
+    proposals: state.proposals
   }
 }
 

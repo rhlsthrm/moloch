@@ -22,7 +22,7 @@ class MemberRow extends Component {
                 <TableCell>{member.nickname}</TableCell>
                 <TableCell>{member.votingShares}</TableCell>
                 <TableCell>{member.dateJoined}</TableCell>
-                <TableCell>{member.sponsoredBy}</TableCell>
+                <TableCell>{member.sponsoredBy ? member.sponsoredBy : 'Founder'}</TableCell>
             </TableRow>
         )
     }
@@ -84,7 +84,7 @@ class MemberRow extends Component {
                                 <p>{member.description}</p>
                             </Grid.Column>
                         </Grid.Row>
-                        
+
                     </Grid>
                 </Modal.Content>
             </Modal>

@@ -11,7 +11,7 @@ class MessageList extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (!nextProps || nextProps == this.props) {
+    if (!nextProps || nextProps === this.props) {
       // no new props
       return
     } else {
