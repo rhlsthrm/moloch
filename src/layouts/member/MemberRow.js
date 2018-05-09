@@ -13,7 +13,7 @@ class MemberRow extends Component {
 
     componentDidMount = () => {
         // TO DO
-        // fetch member from database
+        // fetch members from database
     }
 
     modalTrigger = (member) => {

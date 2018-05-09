@@ -92,10 +92,42 @@ export const getMemberKey = (address, Moloch) => {
     return dispatch => {
         dispatch(requestMemberKey)
         try {
-            const dataKey = Moloch.methods.getMemberKey.cacheCall(address)
+            const dataKey = Moloch.methods.getMember.cacheCall(address)
             dispatch(receiveMemberKey(dataKey))
         } catch (e) {
             dispatch(requestMemberKeyFailure(e))
+        }
+    }
+}
+
+function requestVotingSharesKey () {
+    return {
+        type: 'REQUEST_VOTING_SHARES_KEY'
+    }
+}
+
+function receiveVotingSharesKey (dataKey) {
+    return {
+        type: 'RECEIVED_VOTING_SHARES_KEY',
+        payload: dataKey
+    }
+}
+
+function requestVotingSharesKeyFailure (e) {
+    return {
+        type: 'REQUEST_VOTING_SHARES_KEY_FAILURE',
+        payload: e.toString()
+    }
+}
+
+export const getVotingSharesKey = (address, Moloch) => {
+    return dispatch => {
+        dispatch(requestVotingSharesKey)
+        try {
+            const dataKey = Moloch.methods.getVotingShares.cacheCall(address)
+            dispatch(receiveVotingSharesKey(dataKey))
+        } catch (e) {
+            dispatch(requestVotingSharesKeyFailure(e))
         }
     }
 }

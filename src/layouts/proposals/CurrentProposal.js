@@ -51,8 +51,8 @@ class CurrentProposal extends Component {
             !Moloch.getCurrentProposalIndex[currentProposalIndexKey].error &&
             !currentProposalIndex
         ) {
-            const currentProposalIndex = Moloch.getCurrentProposalIndex[currentProposalIndexKey].value
-            this.setState({ currentProposalIndex })
+            const currentProposalIndexValue = Moloch.getCurrentProposalIndex[currentProposalIndexKey].value
+            this.setState({ currentProposalIndex: currentProposalIndexValue })
         }
 
         // get details from cache
@@ -62,8 +62,8 @@ class CurrentProposal extends Component {
             !Moloch.getCurrentProposalCommonDetails[currentProposalDetailsKey].error &&
             !currentProposalDetails
         ) {
-            const currentProposalDetails = Moloch.getCurrentProposalCommonDetails[currentProposalDetailsKey].value
-            this.setState({ currentProposalDetails })
+            const currentProposalDetailsValue = Moloch.getCurrentProposalCommonDetails[currentProposalDetailsKey].value
+            this.setState({ currentProposalDetails: currentProposalDetailsValue })
         }
     }
 
