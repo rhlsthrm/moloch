@@ -15,7 +15,7 @@ const routingMiddleware = routerMiddleware(browserHistory)
 const sagaMiddleware = createSagaMiddleware()
 
 const initialState = {
-  contracts: generateContractsInitialState(drizzleOptions)
+  contracts: generateContractsInitialState(drizzleOptions),
 }
 
 const store = createStore(
