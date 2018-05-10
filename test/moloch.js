@@ -264,7 +264,7 @@ contract('member application', accounts => {
   })
 
   it('start member proposal vote', async () => {
-    await moloch.startProposalVote()
+    await moloch.startProposalVote({ from: founders.addresses[0] })
 
     const currentProposalIndex = await moloch.getCurrentProposalIndex.call()
     const proposal = await moloch.getProposalCommonDetails.call(
@@ -355,6 +355,20 @@ contract('member application', accounts => {
       endingLootTokenBalance.minus(startingLootTokenBalance),
       VOTING_SHARES_REQUESTED,
       `loot tokens were not created`
+    )
+  })
+
+  it('start next proposal', async () => {
+    await moloch.startProposalVote({ from: founders.addresses[0] })
+
+    const currentProposalIndex = await moloch.getCurrentProposalIndex.call()
+    const proposal = await moloch.getProposalCommonDetails.call(
+      currentProposalIndex
+    )
+    assert.equal(
+      proposal[3],
+      PROPOSAL_PHASES.Voting,
+      `proposal phase did not transition to 'Voting'`
     )
   })
 })
