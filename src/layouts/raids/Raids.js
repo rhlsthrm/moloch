@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { 
     Grid,
     Icon,
+    Container,
 } from 'semantic-ui-react'
+import RaidProposalModalContainer from './RaidProposalModalContainer';
 
 class Raids extends Component {
     state = {
@@ -15,7 +17,11 @@ class Raids extends Component {
 
     render = () => {
         return (
-            <Grid>
+            <Container>
+            <Grid centered>
+                <Grid.Row>
+                    <RaidProposalModalContainer />
+                </Grid.Row>
                 <Grid.Row>
                     <h4 className='ui horizontal divider header'>
                         <Icon className='crosshairs' />
@@ -29,6 +35,7 @@ class Raids extends Component {
                     </h4>
                 </Grid.Row>
             </Grid>
+            </Container>
         )
     }
 
