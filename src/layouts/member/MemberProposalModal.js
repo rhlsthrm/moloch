@@ -5,6 +5,8 @@ import {
     Button,
     Form,
     Input,
+    Grid,
+    Checkbox,
     Label
 } from 'semantic-ui-react'
 import MessageList from '../messages/MessageList';
@@ -21,27 +23,30 @@ class MemberProposalModal extends Component {
         this.props = props
         this.context = context
         this.contracts = context.drizzle.contracts
+        this.web3 = context.drizzle.web3
         // TO DO: bind functions
         // init state
         this.state = {
-            propspectiveMemberAddress: null,
+            prospectiveMemberAddress: null,
+            ethTributeAmount: null,
             tokenTributeAddresses: null, // array of addresses
             tokenTributeAmounts: null, // array of tribute
             votingSharesRequested: null,
             formMessages: [],
             formValid: false,
+            isTokenTribute: false,
         }
     }
 
     validate = () => {
         // TO DO: client side error validation (now just cleans data)
         let {
-            propspectiveMemberAddress,
+            prospectiveMemberAddress,
             tokenTributeAddresses,
             tokenTributeAmounts,
             votingSharesRequested,
         } = this.state
-        if (!propspectiveMemberAddress || !tokenTributeAddresses || !tokenTributeAmounts || !votingSharesRequested) {
+        if (!prospectiveMemberAddress || !votingSharesRequested) {
             // at least one field is empty
             let formMessages = []
             formMessages.push({
@@ -71,6 +76,7 @@ class MemberProposalModal extends Component {
     cleanData = () => {
         const { 
             prospectiveMemberAddress,
+            ethTributeAmount,
             tokenTributeAddresses,
             tokenTributeAmounts,
             votingSharesRequested
@@ -78,13 +84,22 @@ class MemberProposalModal extends Component {
         const results = {}
 
         // format csvs, update state
-        results.tokenTributeAddresses = tokenTributeAddresses.split(',').map( (address) => {
-            return address.trim()
-        })
-        results.tokenTributeAmounts = tokenTributeAmounts.split(',').map( (amount) => {
-            return Number(amount.trim())
-        })
-        results.propspectiveMemberAddress = prospectiveMemberAddress
+        results.tokenTributeAddresses = tokenTributeAddresses === null ?
+            [] :
+            tokenTributeAddresses.split(',').map( (address) => {
+                return address.trim()
+            })
+
+        results.tokenTributeAmounts = tokenTributeAmounts === null ? 
+            [] : 
+            tokenTributeAmounts.split(',').map( (amount) => {
+                return Number(amount.trim())
+            })
+
+        // convert eth deposit to wei
+        results.ethTributeInWei = this.web3.utils.toWei(ethTributeAmount)
+
+        results.prospectiveMemberAddress = prospectiveMemberAddress
         results.votingSharesRequested = Number(votingSharesRequested)
         return results
     }
@@ -93,7 +108,8 @@ class MemberProposalModal extends Component {
         prospectiveMemberAddress,
         tokenTributeAddresses,
         tokenTributeAmounts,
-        votingSharesRequested
+        votingSharesRequested,
+        ethTributeInWei
     }) => {
         try {
             const stackId = this.contracts.Moloch.methods.createMemberProposal.cacheSend(
@@ -101,8 +117,19 @@ class MemberProposalModal extends Component {
                 tokenTributeAddresses,
                 tokenTributeAmounts,
                 votingSharesRequested,
-                { from: this.props.accounts[0] }
+                {
+                    from: this.props.accounts[0],
+                    value: ethTributeInWei
+                }
             )
+            let messages = []
+            messages.push({
+                icon: 'paper plane outline',
+                sentiment: 'positive',
+                title: 'Complete your tx on MetaMask',
+                content:
+                'We have recieved your guild member request! Complete the transaction on MetaMask and refresh the page once it is confirmed on chain.'
+            })
             return stackId
         } catch (e) {
             // unknown error
@@ -145,7 +172,7 @@ class MemberProposalModal extends Component {
 
 
     render = () => {
-        const { formMessages } = this.state
+        let { formMessages, isTokenTribute } = this.state
         return (
             <Modal
             size='small'
@@ -156,32 +183,59 @@ class MemberProposalModal extends Component {
                 <Modal.Header>Submit New Guild Member Proposal</Modal.Header>
                 <Modal.Content>
                     <Form>
-                        <Form.Field>
-                            <Label>Member Address</Label>
+                        <Form.Field required>
+                            <Label basic style={{'border': '0px'}}>Member Address</Label>
                             <Input
                                 type='text'
-                                name='propspectiveMemberAddress'
+                                name='prospectiveMemberAddress'
                                 onChange={this.handleChange}
                             />
                         </Form.Field>
+
                         <Form.Field>
-                            <Label>Token Tribute Addresses (csv)</Label>
+                            <Label basic style={{'border': '0px'}}>ETH Tribute Amount</Label>
+                            <Input
+                                type='number'
+                                name='ethTributeAmount'
+                                onChange={this.handleChange}
+                            />
+                        </Form.Field>
+
+                        <Form.Field>
+                            <Grid>
+                                <Checkbox 
+                                    className='ui toggle'
+                                    defaultChecked={isTokenTribute}
+                                    onChange={() => { this.setState({ isTokenTribute: !isTokenTribute }) }}
+                                    style={{'marginTop':'1em', 'marginBottom': '1em', 'marginRight': '1em'}}
+                                />
+                                <Label 
+                                    basic 
+                                    style={{'border': '0px', 'marginTop':'1em', 'marginBottom': '1em'}}
+                                >
+                                    Token Tribute
+                                </Label>
+                            </Grid>
+                        </Form.Field>
+
+                        <Form.Field disabled={!isTokenTribute}>
+                            <Label basic style={{'border': '0px'}}>Token Tribute Addresses (csv)</Label>
                             <Input
                                 type='text'
                                 name='tokenTributeAddresses'
                                 onChange={this.handleChange}
                             />
                         </Form.Field>
-                        <Form.Field>
-                            <Label>Token Tribute Amounts (csv)</Label>
+                        <Form.Field disabled={!isTokenTribute}>
+                            <Label basic style={{'border': '0px'}}>Token Tribute Amounts (csv)</Label>
                             <Input
                                 type='text'
                                 name='tokenTributeAmounts'
                                 onChange={this.handleChange}
                             />
                         </Form.Field>
-                        <Form.Field>
-                            <Label>Requested Voting Shares</Label>
+                        <Form.Field required>
+                            <Label basic style={{'border': '0px'}}>Requested Voting Shares</Label>
                             <Input
                                 type='number'
                                 name='votingSharesRequested'
@@ -189,7 +243,9 @@ class MemberProposalModal extends Component {
                             />
                         </Form.Field>
 
-                        <Button basic onClick={this.handleSubmit}>Submit</Button>
+                        <Grid centered style={{'margin':'1em'}}>
+                            <Button basic onClick={this.handleSubmit}>Submit</Button>
+                        </Grid>
 
                     </Form>
 
