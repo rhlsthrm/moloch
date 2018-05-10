@@ -42,8 +42,8 @@ class MemberProposalModal extends Component {
         // TO DO: client side error validation (now just cleans data)
         let {
             prospectiveMemberAddress,
-            tokenTributeAddresses,
-            tokenTributeAmounts,
+            // tokenTributeAddresses,
+            // tokenTributeAmounts,
             votingSharesRequested,
         } = this.state
         if (!prospectiveMemberAddress || !votingSharesRequested) {
@@ -122,14 +122,15 @@ class MemberProposalModal extends Component {
                     value: ethTributeInWei
                 }
             )
-            let messages = []
-            messages.push({
+            let formMessages = []
+            formMessages.push({
                 icon: 'paper plane outline',
                 sentiment: 'positive',
                 title: 'Complete your tx on MetaMask',
                 content:
                 'We have recieved your guild member request! Complete the transaction on MetaMask and refresh the page once it is confirmed on chain.'
             })
+            this.setState(formMessages)
             return stackId
         } catch (e) {
             // unknown error
