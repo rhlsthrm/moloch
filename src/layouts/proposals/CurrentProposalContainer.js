@@ -6,6 +6,7 @@ const mapStateToProps = state => {
     Moloch: state.contracts.Moloch,
     currentProposalDetailsKey: state.proposals.currentProposalDetailsKey,
     currentProposalIndexKey: state.proposals.currentProposalIndexKey,
+    accounts: state.accounts,
     fetching: state.proposals.fetching
   }
 }
