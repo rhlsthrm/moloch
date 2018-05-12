@@ -7,6 +7,7 @@ const TestCoin = artifacts.require('./TestCoin')
 const LootToken = artifacts.require('./LootToken')
 const foundersJSON = require('../migrations/founders.json')
 const configJSON = require('../migrations/config.json')
+const IPFS = require('ipfs')
 
 contract('verify up to deployment', accounts => {
   let moloch, founders
@@ -356,6 +357,31 @@ contract('member application', accounts => {
       VOTING_SHARES_REQUESTED,
       `loot tokens were not created`
     )
+  })
+})
+
+contract('proposal application', accounts => {
+  let moloch, guildBankAddress, guildBank, lootTokenAddress, lootToken, founders, proposalsArray
+
+  before('setup', async () => {
+    moloch = await Moloch.deployed()
+    guildBankAddress = await moloch.guildBank.call()
+    guildBank = await GuildBank.at(guildBankAddress)
+    lootTokenAddress = await moloch.lootToken.call()
+    lootToken = await LootToken.at(lootTokenAddress)
+    founders = foundersJSON
+  })
+  
+  it('create IPFS hash', async () => {
+    node = new IPFS()
+    node.on('ready', async () => {
+      proposalsArray = await node.files.add({
+        path: 'proposal.txt',
+        content: Buffer.from('test proposal')
+      })
+      console.log('proposalsArray', proposalsArray)
+      node.stop()
+    })
   })
 })
 
